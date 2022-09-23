@@ -1,0 +1,24 @@
+GDT:
+	flags:
+		ppt flags:
+			present: 													0 (dont use segment)	| 1 (use segment)
+			privlage: 													00 (ring / kernel)		| 01 (sys services)		| 10 (os extensions)	| 11 (applications)
+			type: 														0 (data segment)		| 1 (code segment)
+		type flags (all boolean)
+			contains code?												(if this is false the conforming will be changed to the direction bit)
+			[code flag 1]conforming?	|	[code flag 0]direction?		[code flag 1](can this code be excecuted from lower privileged segments)	|	[code flag 0](turns this segment into a expand down segment)
+			[code flag 1]readable?		| 	[code flag 0]writable?		[code flag 1](can constants be read)										|	[code flag 0](can be altered)
+			accessed?													(true when the CPU is using this segment start at 0)
+		other flags (all boolean)
+			granularity?												(if true the limit is multiplied by 0x1000 to make it able to reach further (32bit addressing range (4gb)))
+			32 bit?
+			64 bit?														TODO
+			AVL?														TODO
+
+Screen:
+	video memory:
+		starts at 0xb8000
+	print char:
+		mov al, (char)					; move char into ax_low
+		mov ah, (color)					; move color into ax_high
+		mov [0xb8000], ax 				; put char and color in the video memory

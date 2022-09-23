@@ -1,0 +1,1 @@
+nasm -f bin -o %~dp0bin\boot.bin %~dp0src\boot.asm

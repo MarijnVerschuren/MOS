@@ -1,0 +1,6 @@
+vid:	https://www.youtube.com/watch?v=EpFUzjYehxs
+
+site:	https://mrdalliard.com/
+
+
+TODO: fix strings in kernel.c

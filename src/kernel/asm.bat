@@ -1,0 +1,1 @@
+gcc -ffreestanding -m32 -O3 -S -o %~dp0int\kernel.asm %~dp0src\kernel.c
