@@ -54,7 +54,7 @@ START_KERNEL:
 
 
 ; variables
-GDT_START:																	; start of the global descryptor table
+GDT_START:																	; start of the global descriptor table
 	GDT_NULL:																; empty GDT
 		dq 0x0000000000000000
 	GDT_CODE:																; code GDT
