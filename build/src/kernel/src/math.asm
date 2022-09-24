@@ -4,7 +4,7 @@ global sin
 ; [sin]  (rad)
 ; EAX (x-axis)
 ; EBX (y-axis)
-sin:
+_sin:
 	push	ebp
 	mov		ebp, esp
 	fld		long [eax]				; st(0) = EAX

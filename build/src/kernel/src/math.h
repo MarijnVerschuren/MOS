@@ -10,18 +10,18 @@
 #define uint32_t unsigned long
 #define int64_t long long
 #define uint64_t unsigned long long
-#define uint unsigned int
-#define f32 float
-#define f64 double
+#define uint_t unsigned int
+#define f32_t float
+#define f64_t double
 /* macros */
 #define MAX(a,b) ((a)>(b) ? (a) : (b))
 #define MIN(a,b) ((a)<(b) ? (a) : (b))
 #define CLAMP(a,b,c) (MIN(MAX(a, b), c))  // a < x < c
 
 /* constants */
-const static double PI = 3.1415926535897932;  // 16 decimal points
+const static f64_t PI = 3.1415926535897932;  // 16 decimal points
 /* functions */
-extern f32 sin(f32);
-// extern f64 sin(f64);
+extern f32_t sin(f32_t);
+// extern f64_t sin(f64_t);
 
 #endif

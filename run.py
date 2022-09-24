@@ -27,23 +27,23 @@ in_files = [
 out_file = multi_join(build_folder, 'bin', 'os.bin')
 
 
-
 if __name__ == "__main__":
-	flags = ""
+	compile_flags = []
+	virtual_machine_flags = ["-m 512M"]
 	if "-help" in sys.argv: print(
 			"[-c-to-asm]\tcompile c files into asm files",
 			sep="\n", end="\n\n"
 		); exit(0)  # dont compile after this
-	if "-c-to-asm" in sys.argv: flags += " -c-to-asm"
+	if "-c-to-asm" in sys.argv: compile_flags.append("-c-to-asm")
 
 	os.chdir(boot_build_folder)
-	cerr(run(rf"python compile.py{flags}"), "boot build fail")		# creates boot.bin
+	cerr(run(rf"python compile.py {' '.join(compile_flags)}"), "boot build fail")		# creates boot.bin
 	os.chdir(kernel_build_folder)
-	cerr(run(rf"python compile.py{flags}"), "kernel build fail")	# creates kernel.bin
+	cerr(run(rf"python compile.py {' '.join(compile_flags)}"), "kernel build fail")	# creates kernel.bin
 
 	os.chdir(build_folder)
 	# combine all files into one raw disk file
 	if windows:	cerr(run(rf"copy /b {'+'.join(in_files)} {out_file}"), "file concat error")
 	else:		cerr(run(rf"cat {' '.join(in_files)} > {out_file}"), "file concat error")
 
-	run(rf"qemu-system-x86_64 -drive file={build_folder}\bin\os.bin,format=raw,index=0,if=floppy -m 128M")
+	run(rf"qemu-system-x86_64 -drive file={out_file},format=raw,index=0,if=floppy {' '.join(virtual_machine_flags)}")

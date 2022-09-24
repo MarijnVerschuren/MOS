@@ -13,7 +13,7 @@ mov sp, bp																	; set stack pointer					: 0x8000
 
 mov bx, KERNEL_LOCATION														; load location						: 0x1000
 mov ah, 0x02																; disk read interrupt
-mov al, 20																	; number of sectors to load			: 0x14
+mov al, 32																	; number of sectors to load			: 0x20
 mov ch, 0																	; cylinder number					: 0x00
 mov dh, 0																	; head number						: 0x00
 mov cl, 2																	; number of first sector to load	: 0x02
