@@ -3,7 +3,7 @@
 
 
 
-// const char* HEX_DIGITS = "0123456789abcdef";
+const char* HEX_DIGITS = "0123456789abcdef";
 
 /*void print(char** pos, const char* restrict str, const char col) {
 	while (*str) {

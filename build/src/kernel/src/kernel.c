@@ -3,57 +3,50 @@
 
 
 
-//const char HEX_DIGITS[] = "0123456789abcdef";
-static inline void print_hex_8(char** pos, const uint8_t data) {
-	put_char(pos, HEX_DIGITS[(data >> 4) & 0xf], 0x30);
-	put_char(pos, HEX_DIGITS[data & 0xf], 0x30);
-}
-inline void print_hex_16(char** pos, const uint16_t data) {
-	const uint8_t* data_ptr = &data;
-	print_hex_8(pos, ((const uint8_t*)&data)[1]);
-	print_hex_8(pos, ((const uint8_t*)&data)[0]);
-}
-inline void print_hex_32(char** pos, const uint32_t data) {
-	const uint8_t* data_ptr = &data;
-	print_hex_8(pos, ((const uint8_t*)&data)[3]);
-	print_hex_8(pos, ((const uint8_t*)&data)[2]);
-	print_hex_8(pos, ((const uint8_t*)&data)[1]);
-	print_hex_8(pos, ((const uint8_t*)&data)[0]);
-}
-inline void print_hex_64(char** pos, const uint64_t data) {
-	const uint8_t* data_ptr = &data;
-	print_hex_8(pos, ((const uint8_t*)&data)[7]);
-	print_hex_8(pos, ((const uint8_t*)&data)[6]);
-	print_hex_8(pos, ((const uint8_t*)&data)[5]);
-	print_hex_8(pos, ((const uint8_t*)&data)[4]);
-	print_hex_8(pos, ((const uint8_t*)&data)[3]);
-	print_hex_8(pos, ((const uint8_t*)&data)[2]);
-	print_hex_8(pos, ((const uint8_t*)&data)[1]);
-	print_hex_8(pos, ((const uint8_t*)&data)[0]);
+void put_pix(uint8_t** pos, const uint8_t pix) {
+	*(*pos) = pix;
+	*pos += 1;
 }
 
 void kernel() {
-	char*	pos =			CONSOLE_MEM;
+	uint8_t*	pos =			GRAPHICS_MODE_DISPLAY_MEM;
 	// screen has exactly 2000 chars (80 x 25)
 
-	
+	/*
 	for (uint8_t i = 0; i < 16; i += 1) {
 		put_char(&pos, HEX_DIGITS[i], 0x30);
 	}
-
 	new_line(&pos);
+	*/
 
-	// this code only works when the line of code in the loop above is present
+
+	for (uint16_t i = 0; i < 320 * 200; i += 1) {
+		put_pix(&pos, i & 0xff);
+	}
+	
+
+	/*
+	for (uint8_t i = 0; i < 0xff; i += 1) {
+		for (uint8_t y = 0; y < 0xf; y += 1) {
+			for (uint8_t x = 0; x < 0xf; x += 1) {
+				put_pix(&pos, (x << 4) | y);
+			}
+		}
+	}
+	*/
+
+	/*
 	uint64_t* pi_ptr = (uint64_t*)&PI;
 	print_hex_64(&pos, *pi_ptr);
 
 	new_line(&pos);
+	*/
 
 	
-	f32_t ans = sin(PI);
+	/*f32_t ans = sin(PI);
 	print_hex_32(&pos, *((uint32_t*)&ans));
 
-	new_line(&pos);
+	new_line(&pos);*/
 
 
 
@@ -83,3 +76,4 @@ CalcTan
 // HEX_DIGITS @ 0x2000 ????????????????
 
 // https://imhex.werwolv.net/   // disassembler
+// https://wiki.osdev.org/Expanded_Main_Page

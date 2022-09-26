@@ -25,9 +25,14 @@ int 0x13																	; interrupt call
 ; jne raise_segment_error		; raise segment error when the number of segments that have been loaded does not match with the number of segments required
 ; jc raise_disk_error			; raise disk error when carry flag is set (sign that "int 0x13" has failed)
 
+; // text mode 			80 x 25			(256 color)
+;mov ah, 0x00
+;mov ax, 0x03																; text mode interupt
+; // graphics mode 		VGA 320 x 200	(256 color)
 mov ah, 0x00
-mov ax, 0x03																; text mode interupt
+mov al, 0x13																; graphics mode interupt
 int 0x10																	; interupt call (clears screen)
+
 
 cli																			; disable bios interupts
 lgdt [GDT_DESCRIOTOR]														; load GDT
