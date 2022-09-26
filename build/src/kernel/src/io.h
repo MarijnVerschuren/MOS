@@ -62,4 +62,5 @@
 
 	/* constants */
 	extern const char* HEX_DIGITS;
+	extern const uint64_t* PIXEL_CHARSET;
 #endif
