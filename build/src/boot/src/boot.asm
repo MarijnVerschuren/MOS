@@ -42,7 +42,7 @@ or eax, 1																	; edit the last bit of eax(cr0)
 mov cr0, eax																; enter 32 bit mode
 jmp CODE_SEG:START_KERNEL													; jump to the 32 bit code segment
 
-jmp $																		; infinite loop
+; code has to stop here (infinite loop in kernel.asm)
 
 [bits 32]
 START_KERNEL:
