@@ -3,8 +3,9 @@
 
 
 
-const char* HEX_DIGITS = "0123456789abcdef";
-const uint64_t* PIXEL_CHARSET = {
+#ifdef GRAPHICS_MODE
+/* constants */
+const uint64_t PIXEL_CHARSET[128] = {
 	0x00,			0x00,			0x00,			0x00,
 	0x00,			0x00,			0x00,			0x00,
 	0x00,			0x00,			0x00,			0x00,
@@ -37,7 +38,38 @@ const uint64_t* PIXEL_CHARSET = {
 	0xc22272204,	0xe99990004,	0x259990004,	0x2ab58c40005,
 	0x996990004,	0x68e999904,	0xf168f0004,	0x11229403,
 	0x7f01,			0x5289103,		0x8a880005,		0x0
-}  // ascii pixel data (add other 127 chars + edit some undefined chars (0x00))
+};  // ascii pixel data (add other 127 chars + edit some undefined chars (0x00))
+
+
+void put_char(uint8_t** pos, const char ch, const uint8_t spacing, const uint8_t color) {
+	// check edge of screen and add newlinecode
+	uint64_t pixel_data = PIXEL_CHARSET[(uint8_t)ch];
+	uint8_t char_width = pixel_data & 0xff;
+	*pos += char_width + spacing;
+	pixel_data >>= 8;  // shift char width out
+
+	if (!pixel_data) { return; }
+	uint8_t* ptr = *pos;
+	char_width = MIN(char_width, 8);  // data can only be 8 bits wide
+
+	uint8_t data_width;
+	for (uint8_t y = 0; y < 7; y++) {
+		for (uint8_t x = 0; x < char_width; x++) {
+			if ((pixel_data >> x) & 0x1) {
+				*ptr = color;
+			}
+			ptr++;
+		}
+		pixel_data >>= char_width;
+		ptr += DISPLAY_WIDTH - char_width;
+	}
+}
+#else
+
+#endif
+
+
+const char* HEX_DIGITS = "0123456789abcdef";
 
 // 00000000			00...00 
 // char_width		data (data can only be 8 wide)

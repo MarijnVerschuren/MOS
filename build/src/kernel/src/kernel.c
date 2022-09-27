@@ -20,9 +20,29 @@ void kernel() {
 	*/
 
 
-	for (uint16_t i = 0; i < 320 * 200; i += 1) {
+	/*for (uint16_t i = 0; i < 320 * 200; i += 1) {
 		put_pix(&pos, i & 0xff);
-	}
+	}*/
+	
+	pos = GRAPHICS_MODE_DISPLAY_MEM + (DISPLAY_WIDTH * 5);
+	/*for (uint8_t i = 0; i < 128; i++) {
+		put_char(&pos, i, DEFAULT_CHAR_SPACING, 0xf);
+	}*/
+	
+	put_char(&pos, 'H', DEFAULT_CHAR_SPACING, 0xf);
+	put_char(&pos, 'e', DEFAULT_CHAR_SPACING, 0xf);
+	put_char(&pos, 'l', DEFAULT_CHAR_SPACING, 0xf);
+	put_char(&pos, 'l', DEFAULT_CHAR_SPACING, 0xf);
+	put_char(&pos, 'o', DEFAULT_CHAR_SPACING, 0xf);
+	put_char(&pos, ' ', DEFAULT_CHAR_SPACING, 0xf);
+	put_char(&pos, 'W', DEFAULT_CHAR_SPACING, 0xf);
+	put_char(&pos, 'o', DEFAULT_CHAR_SPACING, 0xf);
+	put_char(&pos, 'r', DEFAULT_CHAR_SPACING, 0xf);
+	put_char(&pos, 'l', DEFAULT_CHAR_SPACING, 0xf);
+	put_char(&pos, 'd', DEFAULT_CHAR_SPACING, 0xf);
+	put_char(&pos, ' ', DEFAULT_CHAR_SPACING, 0xf);
+	put_char(&pos, 'j', DEFAULT_CHAR_SPACING, 0xf);
+	put_char(&pos, 'j', DEFAULT_CHAR_SPACING, 0xf);
 	
 
 	/*

@@ -14,8 +14,16 @@
 	#define DISPLAY_WIDTH 320
 	#define DISPLAY_HEIGHT 200
 	#define DISPLAY_MEM_MAX (uint8_t*)0xafa00  // ((DISPLAY_MEM + (DISPLAY_WIDTH * DISPLAY_HEIGHT)))
-	/* functions */
 	
+	#define DEFAULT_CHAR_SPACING 2
+	#define DEFAULT_CHAR_COLOR 0xf
+
+	/* constants */
+	extern const uint64_t PIXEL_CHARSET[128];
+
+	/* functions */
+	void put_char(uint8_t** pos, const char ch, const uint8_t spacing, const uint8_t color);
+
 	#else
 	/* definitions */
 	#define DISPLAY_MEM (uint8_t*)0xb8000
@@ -62,5 +70,4 @@
 
 	/* constants */
 	extern const char* HEX_DIGITS;
-	extern const uint64_t* PIXEL_CHARSET;
 #endif

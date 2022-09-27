@@ -63,6 +63,7 @@ if __name__ == "__main__":
 
 
 	dat = charset['~']
+	print(hex(dat))
 	dat_width = dat & 0xff
 	dat >>= 8
 	for y in range(7):
