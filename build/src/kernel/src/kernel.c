@@ -9,66 +9,31 @@ void put_pix(uint8_t** pos, const uint8_t pix) {
 }
 
 void kernel() {
-	uint8_t*	pos =			GRAPHICS_MODE_DISPLAY_MEM;
-	// screen has exactly 2000 chars (80 x 25)
-
-	/*
-	for (uint8_t i = 0; i < 16; i += 1) {
-		put_char(&pos, HEX_DIGITS[i], 0x30);
+	uint8_t*	pos =			DISPLAY_MEM;
+	
+	pos = DISPLAY_MEM + (DISPLAY_WIDTH * 5);
+	for (uint8_t i = 0; i < 128; i++) {
+		put_char(&pos, i, DEFAULT_CHAR_SPACING, DEFAULT_CHAR_COLOR);
 	}
-	new_line(&pos);
-	*/
 
-
-	/*for (uint16_t i = 0; i < 320 * 200; i += 1) {
-		put_pix(&pos, i & 0xff);
-	}*/
+	pos += (2 * DISPLAY_WIDTH * DEFAULT_NEW_LINE_SPACING) - (pos - DISPLAY_MEM) % DISPLAY_WIDTH;
 	
-	pos = GRAPHICS_MODE_DISPLAY_MEM + (DISPLAY_WIDTH * 5);
-	/*for (uint8_t i = 0; i < 128; i++) {
-		put_char(&pos, i, DEFAULT_CHAR_SPACING, 0xf);
-	}*/
-	
-	put_char(&pos, 'H', DEFAULT_CHAR_SPACING, 0xf);
-	put_char(&pos, 'e', DEFAULT_CHAR_SPACING, 0xf);
-	put_char(&pos, 'l', DEFAULT_CHAR_SPACING, 0xf);
-	put_char(&pos, 'l', DEFAULT_CHAR_SPACING, 0xf);
-	put_char(&pos, 'o', DEFAULT_CHAR_SPACING, 0xf);
-	put_char(&pos, ' ', DEFAULT_CHAR_SPACING, 0xf);
-	put_char(&pos, 'W', DEFAULT_CHAR_SPACING, 0xf);
-	put_char(&pos, 'o', DEFAULT_CHAR_SPACING, 0xf);
-	put_char(&pos, 'r', DEFAULT_CHAR_SPACING, 0xf);
-	put_char(&pos, 'l', DEFAULT_CHAR_SPACING, 0xf);
-	put_char(&pos, 'd', DEFAULT_CHAR_SPACING, 0xf);
-	put_char(&pos, ' ', DEFAULT_CHAR_SPACING, 0xf);
-	put_char(&pos, 'j', DEFAULT_CHAR_SPACING, 0xf);
-	put_char(&pos, 'j', DEFAULT_CHAR_SPACING, 0xf);
-	
-
-	/*
-	for (uint8_t i = 0; i < 0xff; i += 1) {
-		for (uint8_t y = 0; y < 0xf; y += 1) {
-			for (uint8_t x = 0; x < 0xf; x += 1) {
-				put_pix(&pos, (x << 4) | y);
-			}
-		}
-	}
-	*/
-
-	/*
 	uint64_t* pi_ptr = (uint64_t*)&PI;
 	print_hex_64(&pos, *pi_ptr);
 
-	new_line(&pos);
-	*/
+	pos += (2 * DISPLAY_WIDTH * DEFAULT_NEW_LINE_SPACING) - (pos - DISPLAY_MEM) % DISPLAY_WIDTH;
 
-	
-	/*f32_t ans = sin(PI);
-	print_hex_32(&pos, *((uint32_t*)&ans));
-
-	new_line(&pos);*/
-
-
+	put_char(&pos, 'H', DEFAULT_CHAR_SPACING, DEFAULT_CHAR_COLOR);
+	put_char(&pos, 'e', DEFAULT_CHAR_SPACING, DEFAULT_CHAR_COLOR);
+	put_char(&pos, 'l', DEFAULT_CHAR_SPACING, DEFAULT_CHAR_COLOR);
+	put_char(&pos, 'l', DEFAULT_CHAR_SPACING, DEFAULT_CHAR_COLOR);
+	put_char(&pos, 'o', DEFAULT_CHAR_SPACING, DEFAULT_CHAR_COLOR);
+	put_char(&pos, ' ', DEFAULT_CHAR_SPACING, DEFAULT_CHAR_COLOR);
+	put_char(&pos, 'W', DEFAULT_CHAR_SPACING, DEFAULT_CHAR_COLOR);
+	put_char(&pos, 'o', DEFAULT_CHAR_SPACING, DEFAULT_CHAR_COLOR);
+	put_char(&pos, 'r', DEFAULT_CHAR_SPACING, DEFAULT_CHAR_COLOR);
+	put_char(&pos, 'l', DEFAULT_CHAR_SPACING, DEFAULT_CHAR_COLOR);
+	put_char(&pos, 'd', DEFAULT_CHAR_SPACING, DEFAULT_CHAR_COLOR);
 
 	return;
 }
