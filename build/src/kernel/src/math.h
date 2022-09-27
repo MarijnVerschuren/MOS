@@ -21,7 +21,10 @@
 /* constants */
 const static f64_t PI = 3.1415926535897932;  // 16 decimal points
 /* functions */
-extern f32_t sin(f32_t);
+extern f64_t sin(f64_t x);
+extern f64_t cos(f64_t x);
+extern f64_t tan(f64_t x);
+extern f64_t sqrt(f64_t x);
 // extern f64_t sin(f64_t);
 
 #endif

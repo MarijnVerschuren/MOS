@@ -3,37 +3,35 @@
 
 
 
-void put_pix(uint8_t** pos, const uint8_t pix) {
-	*(*pos) = pix;
-	*pos += 1;
-}
-
 void kernel() {
 	uint8_t*	pos =			DISPLAY_MEM;
 	
-	pos = DISPLAY_MEM + (DISPLAY_WIDTH * 5);
+	new_line(&pos, DEFAULT_NEW_LINE_SPACING);
 	for (uint8_t i = 0; i < 128; i++) {
 		put_char(&pos, i, DEFAULT_CHAR_SPACING, DEFAULT_CHAR_COLOR);
 	}
 
-	pos += (2 * DISPLAY_WIDTH * DEFAULT_NEW_LINE_SPACING) - (pos - DISPLAY_MEM) % DISPLAY_WIDTH;
-	
+	new_line(&pos, DEFAULT_NEW_LINE_SPACING * 2);
 	uint64_t* pi_ptr = (uint64_t*)&PI;
 	print_hex_64(&pos, *pi_ptr);
 
-	pos += (2 * DISPLAY_WIDTH * DEFAULT_NEW_LINE_SPACING) - (pos - DISPLAY_MEM) % DISPLAY_WIDTH;
+	new_line(&pos, DEFAULT_NEW_LINE_SPACING * 2);
+	f64_t sin_hp = sin(PI / 2);
+	uint64_t* sin_hp_ptr = (uint64_t*)&sin_hp;
+	print_hex_64(&pos, *sin_hp_ptr);
 
-	put_char(&pos, 'H', DEFAULT_CHAR_SPACING, DEFAULT_CHAR_COLOR);
-	put_char(&pos, 'e', DEFAULT_CHAR_SPACING, DEFAULT_CHAR_COLOR);
-	put_char(&pos, 'l', DEFAULT_CHAR_SPACING, DEFAULT_CHAR_COLOR);
-	put_char(&pos, 'l', DEFAULT_CHAR_SPACING, DEFAULT_CHAR_COLOR);
-	put_char(&pos, 'o', DEFAULT_CHAR_SPACING, DEFAULT_CHAR_COLOR);
-	put_char(&pos, ' ', DEFAULT_CHAR_SPACING, DEFAULT_CHAR_COLOR);
-	put_char(&pos, 'W', DEFAULT_CHAR_SPACING, DEFAULT_CHAR_COLOR);
-	put_char(&pos, 'o', DEFAULT_CHAR_SPACING, DEFAULT_CHAR_COLOR);
-	put_char(&pos, 'r', DEFAULT_CHAR_SPACING, DEFAULT_CHAR_COLOR);
-	put_char(&pos, 'l', DEFAULT_CHAR_SPACING, DEFAULT_CHAR_COLOR);
-	put_char(&pos, 'd', DEFAULT_CHAR_SPACING, DEFAULT_CHAR_COLOR);
+	new_line(&pos, DEFAULT_NEW_LINE_SPACING * 2);
+	f64_t cos_hp = cos(PI / 2);
+	uint64_t* cos_hp_ptr = (uint64_t*)&cos_hp;
+	print_hex_64(&pos, *cos_hp_ptr);
+
+	new_line(&pos, DEFAULT_NEW_LINE_SPACING * 2);
+	f64_t tan_hp = tan(PI / 2);
+	uint64_t* tan_hp_ptr = (uint64_t*)&tan_hp;
+	print_hex_64(&pos, *tan_hp_ptr);
+
+	new_line(&pos, DEFAULT_NEW_LINE_SPACING * 2);
+	print(&pos, "Hello World!", DEFAULT_CHAR_SPACING, DEFAULT_CHAR_COLOR);
 
 	return;
 }

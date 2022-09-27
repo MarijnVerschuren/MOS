@@ -29,8 +29,8 @@ build_files = [
 		multi_join(kernel_build_folder, "int", "io.c.o")
 	],
 	[
-		multi_join(kernel_build_folder, "src", "math.asm"),
-		multi_join(kernel_build_folder, "int", "math.asm.o")
+		multi_join(kernel_build_folder, "src", "math.c"),
+		multi_join(kernel_build_folder, "int", "math.c.o")
 	],
 ]
 tmp_file = multi_join(kernel_build_folder, "int", "kernel.tmp")
@@ -55,7 +55,7 @@ if __name__ == '__main__':
 			cerr(run(rf"nasm -f elf -o {int_file} {src_file}"), f"failed to compile {src_file}")
 		elif src_file.endswith(".c"):
 			cerr(run(rf"gcc -ffreestanding -m32 -g {' '.join(compile_flags)} -c -o {int_file} {src_file}"), f"failed to compile {src_file}")
-			if c_to_asm: run(rf"gcc -ffreestanding -m32 {' '.join(compile_flags)} -S -o {multi_join(kernel_build_folder, 'int', f'{src_file}.asm')} {src_file}")
+			if c_to_asm: run(rf"gcc -ffreestanding -m32 {' '.join(compile_flags)} -S -c -o {multi_join(kernel_build_folder, 'int', f'{src_file}.asm')} {src_file}")
 		else: cerr(1, f"no compile rules for {src_file}")
 		int_files.append(int_file)
 

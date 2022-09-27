@@ -3,8 +3,9 @@
 
 
 
+/* constants */
 const char* HEX_DIGITS = "0123456789abcdef";
-
+/* functions */
 void print_hex_16(uint8_t** pos, const uint16_t data) {
 	const uint8_t* data_ptr = (uint8_t*)&data;
 	print_hex_8(pos, ((const uint8_t*)&data)[1]);
@@ -70,21 +71,21 @@ const uint64_t PIXEL_CHARSET[128] = {
 };  // ascii pixel data (add other 127 chars + edit some undefined chars (0x00))
 
 
-void put_char(uint8_t** pos, const char ch, const uint8_t spacing, const uint8_t color) {
+void put_char(uint8_t** pos, const char chr, const uint8_t spacing, const uint8_t color) {
 	// loading character data
-	uint64_t pixel_data = PIXEL_CHARSET[(uint8_t)ch];
+	uint64_t pixel_data = PIXEL_CHARSET[(uint8_t)chr];
 	uint8_t char_width = pixel_data & 0xff;
 	// calculating if the char will still fit on this line
 	uint16_t space = DISPLAY_WIDTH - ((*pos - DISPLAY_MEM) % DISPLAY_WIDTH);
 	uint32_t add = char_width + spacing;
 	if (add > space && char_width < space) { add = space - 1; }
 	else if ((*pos - DISPLAY_MEM) % DISPLAY_WIDTH > ((*pos + add) - DISPLAY_MEM) % DISPLAY_WIDTH) { *pos += DEFAULT_NEW_LINE_SPACING * DISPLAY_WIDTH + space; }
-	// preparing pixel data and checking if there are pixels to draw
-	pixel_data >>= 8;  // shift char width out
-	if (!pixel_data) { return; }
 	// setting the pointer vriable and return value (pos)
 	uint8_t* ptr = *pos;
 	*pos += add;
+	// preparing pixel data and checking if there are pixels to draw
+	pixel_data >>= 8;  // shift char width out
+	if (!pixel_data) { return; }
 	// setting the char width (max 8) and starting the pixel drawing loop
 	char_width = MIN(char_width, 8);  // data can only be 8 bits wide
 	for (uint8_t y = 0; y < 7; y++) {
@@ -99,12 +100,34 @@ void put_char(uint8_t** pos, const char ch, const uint8_t spacing, const uint8_t
 	}
 }
 
+void print(uint8_t** pos, const char* str, const uint8_t spacing, const uint8_t color) {
+	while (*str) { put_char(pos, *str++, spacing, color); }
+}
+
+void new_line(uint8_t** pos, const uint8_t count) {
+	*pos += (DISPLAY_WIDTH * count) - ((*pos - DISPLAY_MEM) % DISPLAY_WIDTH);
+}
+
 void print_hex_8(uint8_t** pos, const uint8_t data) {
 	put_char(pos, HEX_DIGITS[(data >> 4) & 0xf], DEFAULT_CHAR_SPACING, DEFAULT_CHAR_COLOR);
 	put_char(pos, HEX_DIGITS[data & 0xf], DEFAULT_CHAR_SPACING, DEFAULT_CHAR_COLOR);
 }
 
 #else  // Text mode
+void put_char(uint8_t** pos, const char chr, const uint8_t col) {
+	(*pos)[0] = chr;
+	(*pos)[1] = col;
+	*pos += 2;
+}
+
+void print(uint8_t** pos, const char* str, const uint8_t col) {
+	while (*str) { put_char(pos, *str++, col); }
+}
+
+void new_line(uint8_t** pos, const uint8_t count) {
+	*pos += (TEXT_MODE_ROWS * 2) - (((*pos) - DISPAY_MEM) % (TEXT_MODE_ROWS * 2));
+}
+
 void print_hex_8(uint8_t** pos, const uint8_t data) {
 	put_char(pos, HEX_DIGITS[(data >> 4) & 0xf], DEFAULT_CHAR_COLOR);
 	put_char(pos, HEX_DIGITS[data & 0xf], DEFAULT_CHAR_COLOR);

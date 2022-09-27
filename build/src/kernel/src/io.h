@@ -11,11 +11,11 @@
 	
 	/* constants */
 	extern const char* HEX_DIGITS;
-
 	/* functions */
 	void print_hex_16(uint8_t** pos, const uint16_t data);
 	void print_hex_32(uint8_t** pos, const uint32_t data);
 	void print_hex_64(uint8_t** pos, const uint64_t data);
+
 
 
 	/* BUILD SPECIFIC */
@@ -34,7 +34,10 @@
 	extern const uint64_t PIXEL_CHARSET[128];
 
 	/* functions */
-	void put_char(uint8_t** pos, const char ch, const uint8_t spacing, const uint8_t color);
+	void put_char(uint8_t** pos, const char chr, const uint8_t spacing, const uint8_t color);
+	void print(uint8_t** pos, const char* str, const uint8_t spacing, const uint8_t color);
+	void new_line(uint8_t** pos, const uint8_t count);
+
 	void print_hex_8(uint8_t** pos, const uint8_t data);
 
 	#else
@@ -46,13 +49,13 @@
 
 	#define DEFAULT_CHAR_COLOR 0x30
 	/* functions */
-	// [new_line] (pos) => returns via arg
-	inline void new_line(uint8_t** pos) { *pos += (TEXT_MODE_ROWS * 2) - (((*pos) - DISPAY_MEM) % (TEXT_MODE_ROWS * 2)); }
-	// [put_char] (pos, chr, col) => void
-	inline void put_char(uint8_t** pos, const char chr, const uint8_t col) { (*pos)[0] = chr; (*pos)[1] = col; *pos += 2; }
-	// [char_color] (bg, fg) => uint8_t
-	inline uint8_t char_color(const uint8_t bg, const uint8_t fg) { return (bg << 4) | (fg >> 4); }
+	void put_char(uint8_t** pos, const char chr, const uint8_t col);									// [put_char] (pos, chr, col) => returns via arg (pos)
+	void print(uint8_t** pos, const char* str, const uint8_t col);										// [print] (pos, chr, col) => returns via arg (pos)
+	void new_line(uint8_t** pos, const uint8_t count);													// [new_line] (pos, count) => returns via arg (pos)
+	inline uint8_t char_color(const uint8_t bg, const uint8_t fg) { return (bg << 4) | (fg >> 4); }		// [char_color] (bg, fg) => uint8_t
 	// TODO: to make put char safe add (pos = CLAMP(DISPAY_MEM, pos, CONSOLE_MEM_MAX);)
+
 	void print_hex_8(uint8_t** pos, const uint8_t data);
+	
 	#endif
 #endif
