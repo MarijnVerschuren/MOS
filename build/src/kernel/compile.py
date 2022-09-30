@@ -32,6 +32,14 @@ build_files = [
 		multi_join(kernel_build_folder, "src", "math.c"),
 		multi_join(kernel_build_folder, "int", "math.c.o")
 	],
+	[
+		multi_join(kernel_build_folder, "src", "mem.c"),
+		multi_join(kernel_build_folder, "int", "mem.c.o")
+	],
+	[
+		multi_join(kernel_build_folder, "src", "mem.asm"),
+		multi_join(kernel_build_folder, "int", "mem.asm.o")
+	],
 ]
 tmp_file = multi_join(kernel_build_folder, "int", "kernel.tmp")
 out_file = multi_join(kernel_build_folder, "bin", "kernel.bin")

@@ -10,11 +10,15 @@
 #define uint32_t unsigned long
 #define int64_t long long
 #define uint64_t unsigned long long
+
 #define uint_t unsigned int
+#define size_t uint32_t
+
 #define f32_t float
 #define f64_t double
 
 /* macros */
+#define ABS(x) (x > 0 ? x : -x)
 #define MAX(a,b) ((a)>(b) ? (a) : (b))
 #define MIN(a,b) ((a)<(b) ? (a) : (b))
 #define CLAMP(a,b,c) (MIN(MAX(a, b), c))  // a < x < c

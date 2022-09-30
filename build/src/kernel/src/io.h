@@ -2,6 +2,7 @@
 #define IO
 
 	#include "math.h"
+	#include "mem.h"
 
 	// BUILD MODE
 	#define GRAPHICS_MODE  // currently the boot sector and kernel are compiled in text mode
@@ -24,6 +25,7 @@
 	#define DISPLAY_MEM ((uint8_t*)0xa0000)
 	#define DISPLAY_WIDTH 320
 	#define DISPLAY_HEIGHT 200
+	#define DISPLAY_SIZE 64000
 	#define DISPLAY_MEM_MAX (uint8_t*)0xafa00  // ((DISPLAY_MEM + (DISPLAY_WIDTH * DISPLAY_HEIGHT)))
 	
 	#define DEFAULT_CHAR_SPACING 2
@@ -34,6 +36,10 @@
 	extern const uint64_t PIXEL_CHARSET[128];
 
 	/* functions */
+	inline void put_pix_raw(uint8_t** pos, const uint8_t color) { *(*pos) = color; (*pos)++; }
+	inline void put_pix(const uint8_t color, const uint16_t x, const uint16_t y) { *(DISPLAY_MEM + x + (y * DISPLAY_WIDTH)) = color; }
+	inline void clear_screen() { memset(DISPLAY_MEM, 0x00, DISPLAY_SIZE); }  // TODO: make memset more efficient
+
 	void put_char(uint8_t** pos, const char chr, const uint8_t spacing, const uint8_t color);
 	void print(uint8_t** pos, const char* str, const uint8_t spacing, const uint8_t color);
 	void new_line(uint8_t** pos, const uint8_t count);
