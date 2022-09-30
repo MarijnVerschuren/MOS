@@ -60,9 +60,9 @@ void splash() {
 	uint16_t y_offset = height / 2;
 
 	// these three variables define a rotation from 0 to 2pi
-	float theta_spacing = 0.01;	// angle step in (?) axis (or part of donut?)
-	float phi_spacing = 0.01;	// angle step in (?) axis (or part of donut?)
-	float limit = PI * 2;		// max angle
+	const float theta_spacing = 0.01;	//0.01;	// angle step in (?) axis (or part of donut?)
+	const float phi_spacing = 0.01;		//0.01;	// angle step in (?) axis (or part of donut?)
+	const float limit = PI * 2;			// max angle
 
 	// pixel luminance
 	uint8_t plum[12] = {0x10, 0x12, 0x14, 0x15, 0x16, 0x17, 0x18, 0x19, 0x1a, 0x1b, 0x1d, 0x1e};
@@ -105,9 +105,9 @@ void splash() {
 		
 		for (uint16_t i = 0; i < DISPLAY_SIZE; i++) {
 			put_pix_raw(&pos, i % width ? frame_buffer[i] : 0x0);
-			A += 0.000002;
-			B += 0.000001;
 		}
+		A += 0.128;
+		B += 0.064;
 		pos = DISPLAY_MEM;
 	}
 }
@@ -116,7 +116,7 @@ void splash() {
 void kernel() {
 	print_test();
 	for (uint64_t i = 0; i < 0x1ffffff; i++) { sin(i); }  // DELAY!!
-	splash();
+	splash();  // TODO: give donut a 128^2 window
 	return;
 }
 

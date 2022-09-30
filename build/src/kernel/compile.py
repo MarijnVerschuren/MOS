@@ -48,8 +48,8 @@ out_file = multi_join(kernel_build_folder, "bin", "kernel.bin")
 
 if __name__ == '__main__':
 	c_to_asm = False
-	compile_flags = ["-O3"]
-	link_flags = []
+	compile_flags = ["-O3", "-m32"]
+	link_flags = ["-m i386pe"]
 	object_copy_flags = []  # "-j .text"
 	if "-help" in sys.argv: print(
 			"[-c-to-asm]\tcompile c files into asm files",
@@ -62,7 +62,7 @@ if __name__ == '__main__':
 		if src_file.endswith(".asm"):
 			cerr(run(rf"nasm -f elf -o {int_file} {src_file}"), f"failed to compile {src_file}")
 		elif src_file.endswith(".c"):
-			cerr(run(rf"gcc -ffreestanding -m32 -g {' '.join(compile_flags)} -c -o {int_file} {src_file}"), f"failed to compile {src_file}")
+			cerr(run(rf"gcc -ffreestanding -g {' '.join(compile_flags)} -c -o {int_file} {src_file}"), f"failed to compile {src_file}")
 			if c_to_asm: run(rf"gcc -ffreestanding -m32 {' '.join(compile_flags)} -S -c -o {multi_join(kernel_build_folder, 'int', f'{src_file}.asm')} {src_file}")
 		else: cerr(1, f"no compile rules for {src_file}")
 		int_files.append(int_file)
