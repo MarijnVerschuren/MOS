@@ -50,10 +50,12 @@ if __name__ == "__main__":
 
 	print(charset)
 
+
+	# print output
 	import pprint
 	pp = pprint.PrettyPrinter(indent=4)
-	# pp.pprint(charset)
-	pp.pprint([hex(item) for _, item in charset.items()])  # raw data
+	pp.pprint(charset)
+	# pp.pprint([hex(item) for _, item in charset.items()])  # raw data
 	
 	"""
 	dat = "{0:b}".format(charset['+'])
@@ -61,7 +63,8 @@ if __name__ == "__main__":
 	# 000000000000000000000000000000000000000000000 010 111 010 000 000 0011
 	"""
 
-
+	# testing
+	"""
 	dat = charset['~']
 	print(hex(dat))
 	dat_width = dat & 0xff
@@ -72,3 +75,4 @@ if __name__ == "__main__":
 			else: print(" ", end=" ")
 		dat >>= dat_width
 		print()
+	"""
