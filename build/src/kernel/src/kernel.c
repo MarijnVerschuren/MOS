@@ -87,13 +87,13 @@ void splash() {
 				f = sin(j);
 				g = cos(A);
 				h = d + 2;
-				k = 1 / (c * h * e + f * g + 5);
+				k = 1 / (c * h * e + f * g + 10);
 				l = cos(i);
 				m = cos(B);
 				n = sin(B);
 				o = c * h * g - f * e;
-				x = x_offset + 80 * k * (l * h * m - o * n);	// 3D x cord (after rotation)
-				y = y_offset + 40 * k * (l * h * n + o * m);	// 3D y cord (after rotation)
+				x = x_offset + 160 * k * (l * h * m - o * n);	// 3D x cord (after rotation)
+				y = y_offset + 160 * k * (l * h * n + o * m);	// 3D y cord (after rotation)
 				z = x + width * y;								// index in z_buffer (after rotation)
 				lum = 8 * ((f * e - c * d * g) * m - c * d * e - f * g - l * d * n);	// pixel luminance index 
 				if (height > y && y > 0 && width > x && x > 0 && k > z_buffer[z]) {
