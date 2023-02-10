@@ -48,7 +48,7 @@ out_file = multi_join(kernel_build_folder, "bin", "kernel.bin")
 
 if __name__ == '__main__':
 	c_to_asm = False
-	compile_flags = ["-O3", "-m32"]
+	compile_flags = ["-O3", "-m32"]  #  "-fno-PIE", "-fno-PIC", "-fstack-protector"
 	link_flags = ["-m i386pe"]
 	object_copy_flags = []  # "-j .text"
 	if "-help" in sys.argv: print(
@@ -67,7 +67,7 @@ if __name__ == '__main__':
 		else: cerr(1, f"no compile rules for {src_file}")
 		int_files.append(int_file)
 
-	cerr(run(rf"ld -T NUL {' '.join(link_flags)} -o {tmp_file} -Ttext 0x1000 {' '.join(int_files)}"), "link fail")
+	cerr(run(rf"ld -T NUL {' '.join(link_flags)} -o {tmp_file} -Ttext 0x1000 {' '.join(int_files)} --verbose"), "link fail")
 	cerr(run(rf"objcopy -O binary {' '.join(object_copy_flags)} {tmp_file} {out_file}"), "object copy fail")
 
 

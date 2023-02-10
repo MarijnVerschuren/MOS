@@ -46,4 +46,4 @@ if __name__ == "__main__":
 	if windows:	cerr(run(rf"copy /b {'+'.join(in_files)} {out_file}"), "file concat error")
 	else:		cerr(run(rf"cat {' '.join(in_files)} > {out_file}"), "file concat error")
 
-	run(rf"qemu-system-x86_64 -drive file={out_file},format=raw,index=0,if=floppy {' '.join(virtual_machine_flags)}")
+	run(rf"qemu-system-x86_64 -drive file={out_file},format=raw,index=0,if=floppy {' '.join(virtual_machine_flags)} -display spice-app")
